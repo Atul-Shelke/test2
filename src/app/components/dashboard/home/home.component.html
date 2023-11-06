@@ -1,0 +1,118 @@
+<div class="container">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>Manage <b>Employees</b></h2>
+          </div>
+          <div class="col-sm-6">
+            <!-- <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a> 
+            -->
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeModal" (click)="openModal()">ADD Employee</button>
+            <button class="btn btn-danger">Delete</button>
+            <!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>
+              Id
+            </th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Salary</th>
+            
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr *ngFor="let item of data">
+            <td>
+              {{item.id}}
+            </td>
+            <td>{{item.employee_name}}</td>
+            <td>{{item.employee_age}}</td>
+            <td>{{item.employee_salary}}</td>
+           
+            <td>
+              <!-- <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+              <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> -->
+             <span (click)="updateModal(item)"> <i class="fa fa-pencil-alt"></i></span> <!-- Edit icon -->
+             <span (click)="deleteModal(item)"> <i class="fa fa-trash-alt"></i> </span> <!-- Delete icon -->
+
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    
+    </div>
+  </div>
+  <!-- ADD Modal HTML -->
+  <div id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModal" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="employeeDetailsForm">
+          <div class="modal-header">
+            <h4 class="modal-title">{{isEdit ? 'Update Form':'Add Form'}}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)=" closeModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" formControlName="employee_name" class="form-control" required>
+              <div *ngIf="employeeDetailsForm.get('employee_name').hasError('required') && employeeDetailsForm.get('employee_name').touched" class="validatedText">
+                name is required
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Age</label>
+              <input type="number" formControlName="employee_age" class="form-control" required>
+              <div *ngIf="employeeDetailsForm.get('employee_age').hasError('required') && employeeDetailsForm.get('employee_age').touched" class="validatedText">
+                age is required
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Salary</label>
+              <input type="number" formControlName="employee_salary" class="form-control " inputmode="none" required>
+              <div *ngIf="employeeDetailsForm.get('employee_salary').hasError('required') && employeeDetailsForm.get('employee_salary').touched" class="validatedText">
+                salary is required
+              </div>
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <!-- <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"> -->
+            <button class="btn btn-danger close" (click)=" closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-success" (click)="addEmployeeDetails()">{{isEdit ?'Update':'Add'}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Delete Modal HTML -->
+  <div id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmployeeModal" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header" >
+            <h4 class="modal-title">Delete {{deleteConfig?.employee_name}}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeDeleteModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete these Records?</p>
+            
+          </div>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-default" data-dismiss="modal" (click)="closeDeleteModal()" value="Cancel">
+            <button class="btn btn-danger" (click)="deleteRecord(deleteConfig?.id)">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+

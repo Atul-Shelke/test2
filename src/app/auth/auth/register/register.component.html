@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <form [formGroup]="registerForm">
+        <h1>Register!</h1>
+        <div>
+        <input type="text" formControlName="firstname" placeholder="First Name" />
+        <div *ngIf="registerForm.get('firstname').hasError('required') && registerForm.get('firstname').touched" class="validatedText">
+            firstname is required
+          </div>
+    </div>
+        <div>
+        <input type="text" formControlName="lastname" placeholder="Last Name" />
+        <div *ngIf="registerForm.get('lastname').hasError('required') && registerForm.get('lastname').touched" class="validatedText">
+            lastname is required
+          </div>
+    </div>
+    <div>
+        <input type="email" formControlName="email" placeholder="Email" />
+        <div *ngIf="registerForm.get('email').hasError('required') && registerForm.get('email').touched" class="validatedText">
+            Email is required
+          </div>
+          <div *ngIf="registerForm.get('email').hasError('email') && registerForm.get('email').touched" class="validatedText">
+            Please enter a valid email address
+          </div>
+    </div>
+    <div>
+        <input type="number" formControlName="contactNo" placeholder=" Contact No" />
+        <div *ngIf="registerForm.get('contactNo').hasError('required') && registerForm.get('contactNo').touched" class="validatedText">
+            Contact Number is required
+          </div>
+          <div *ngIf="registerForm.get('contactNo').hasError('pattern') && registerForm.get('contactNo').touched" class="validatedText">
+            Invalid contact number format. Please enter 10 digits.
+          </div>
+    </div>
+       <div>
+        <textarea formControlName="address" placeholder="Address"></textarea>
+    </div>
+    <div>
+        <input type="password"  formControlName="password" placeholder=" Password" />
+        <div *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched" class="validatedText">
+            Password is required
+          </div>
+          <div *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched" class="validatedText">
+            Password must be at least 6 characters long
+          </div>
+          <div *ngIf="registerForm.get('password').hasError('pattern') && registerForm.get('password').touched" class="validatedText">
+            Password must be alphanumeric
+          </div>
+          
+    </div>
+    <div>
+        <input type="password" formControlName="rpassword" placeholder="Confirmed password" onpaste="return false"/>
+    </div>
+        
+        <input  type="submit" (click)="onSubmit()"  value="Submit"/>
+        <span>Already register ?<span routerLink="/auth">Login</span> </span>
+      </form>
+    </div>
